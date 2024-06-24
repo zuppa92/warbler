@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul id="messages" class="list-group">
+          {% for msg in messages %}
+            <li class="list-group-item">
+              <a href="/messages/{{ msg.id }}" class="message-link"></a>
+              <img src="{{ msg.user.image_url }}" alt="" class="timeline-image">
+              <div class="message-area">
+                <a href="/users/{{ msg.user.id }}">@{{ msg.user.username }}</a>
+                <span class="text-muted">{{ msg.timestamp.strftime('%d %B %Y') }}</span>
+                <p>{{ msg.text }}</p>
+                {% if msg in g.user.likes %}
+                  <form method="POST" action="/users/remove_like/{{ msg.id }}">
+                    <button class="btn btn-sm btn-danger">Unlike</button>
+                  </form>
+                {% else %}
+                  <form method="POST" action="/users/add_like/{{ msg.id }}">
+                    <button class="btn btn-sm btn-primary">Like</button>
+                  </form>
+                {% endif %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}

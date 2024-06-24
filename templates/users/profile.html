@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="profile-header">
+          <img id="warbler-hero" src="{{ user.header_image_url }}" alt="Header image for {{ user.username }}">
+          <img id="profile-avatar" src="{{ user.image_url }}" alt="Profile image for {{ user.username }}">
+        </div>
+        <h2>@{{ user.username }}</h2>
+        <p class="user-location">{{ user.location }}</p>
+        <p>{{ user.bio }}</p>
+        <ul class="user-stats nav nav-pills">
+          <li class="stat">
+            <p class="small">Messages</p>
+            <h4>
+              <a href="/users/{{ user.id }}/messages">{{ user.messages|count }}</a>
+            </h4>
+          </li>
+          <li class="stat">
+            <p class="small">Following</p>
+            <h4>
+              <a href="/users/{{ user.id }}/following">{{ user.following.count() }}</a>
+            </h4>
+          </li>
+          <li class="stat">
+            <p class="small">Followers</p>
+            <h4>
+              <a href="/users/{{ user.id }}/followers">{{ user.followers.count() }}</a>
+            </h4>
+          </li>
+          <li class="stat">
+            <p class="small">Likes</p>
+            <h4>
+              <a href="/users/{{ user.id }}/likes">{{ user.likes.count() }}</a>
+            </h4>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <ul id="messages" class="list-group">
+          {% for msg in messages %}
+            <li class="list-group-item">
+              <a href="/messages/{{ msg.id }}" class="message-link"></a>
+              <img src="{{ msg.user.image_url }}" alt="" class="timeline-image">
+              <div class="message-area">
+                <a href="/users/{{ msg.user.id }}">@{{ msg.user.username }}</a>
+                <span class="text-muted">{{ msg.timestamp.strftime('%d %B %Y') }}</span>
+                <p>{{ msg.text }}</p>
+                {% if g.user %}
+                  {% if msg in g.user.likes %}
+                    <form method="POST" action="/users/remove_like/{{ msg.id }}">
+                      <button class="btn btn-outline-warning btn-sm">Unlike</button>
+                    </form>
+                  {% else %}
+                    <form method="POST" action="/users/add_like/{{ msg.id }}">
+                      <button class="btn btn-outline-warning btn-sm">Like</button>
+                    </form>
+                  {% endif %}
+                {% endif %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}

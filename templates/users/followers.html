@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Followers</h2>
+        <div class="user-cards">
+          {% for user in user.followers %}
+            <div class="user-card">
+              <div class="card-hero">
+                <a href="/users/{{ user.id }}">
+                  <img src="{{ user.header_image_url }}" alt="Header image for {{ user.username }}">
+                </a>
+              </div>
+              <div class="card-inner">
+                <div class="image-wrapper">
+                  <a href="/users/{{ user.id }}">
+                    <img src="{{ user.image_url }}" class="card-image" alt="Profile image for {{ user.username }}">
+                  </a>
+                </div>
+                <div class="card-contents">
+                  <div class="card-link">
+                    <a href="/users/{{ user.id }}">
+                      <p>{{ user.username }}</p>
+                      <p class="card-bio">{{ user.bio }}</p>
+                    </a>
+                  </div>
+                  <div>
+                    {% if g.user.is_following(user) %}
+                      <form action="/users/stop-following/{{ user.id }}" method="post">
+                        <button class="btn btn-primary">Unfollow</button>
+                      </form>
+                    {% else %}
+                      <form action="/users/follow/{{ user.id }}" method="post">
+                        <button class="btn btn-outline-primary">Follow</button>
+                      </form>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

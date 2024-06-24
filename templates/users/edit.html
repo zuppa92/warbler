@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+        <h2>Edit Profile</h2>
+        <form method="POST">
+          {{ form.hidden_tag() }}
+
+          <div class="form-group">
+            {{ form.username.label(class="form-control-label") }}
+            {{ form.username(class="form-control form-control-lg") }}
+          </div>
+
+          <div class="form-group">
+            {{ form.email.label(class="form-control-label") }}
+            {{ form.email(class="form-control form-control-lg") }}
+          </div>
+
+          <div class="form-group">
+            {{ form.image_url.label(class="form-control-label") }}
+            {{ form.image_url(class="form-control form-control-lg") }}
+          </div>
+
+          <div class="form-group">
+            {{ form.header_image_url.label(class="form-control-label") }}
+            {{ form.header_image_url(class="form-control form-control-lg") }}
+          </div>
+
+          <div class="form-group">
+            {{ form.bio.label(class="form-control-label") }}
+            {{ form.bio(class="form-control form-control-lg") }}
+          </div>
+
+          <div class="form-group">
+            {{ form.location.label(class="form-control-label") }}
+            {{ form.location(class="form-control form-control-lg") }}
+          </div>
+
+          <div class="form-group">
+            {{ form.password.label(class="form-control-label") }}
+            {{ form.password(class="form-control form-control-lg") }}
+          </div>
+
+          <button class="btn btn-primary btn-lg btn-block">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
